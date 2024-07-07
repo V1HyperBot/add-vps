@@ -18,7 +18,6 @@ ngrok authtoken $NGROK_API
 nohup bash -c 'while true; do ngrok tcp 22; sleep 3600; done' &
 
 sleep 10
-screen -S system
 clear
 curl --silent --show-error http://127.0.0.1:4040/api/tunnels > tunnels.json
 NGROK_URL=$(jq -r '.tunnels[] | select(.proto=="tcp") | .public_url' tunnels.json)
