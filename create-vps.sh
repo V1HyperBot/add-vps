@@ -30,4 +30,3 @@ echo "Hostname: $NGROK_HOST"
 echo "Port: $NGROK_PORT"
 echo "Use the above information to connect using PuTTY or any SSH client."
 rm -rf nohup* tunnels*
-sleep infinity
