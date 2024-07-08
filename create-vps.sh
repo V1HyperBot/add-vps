@@ -2,6 +2,7 @@ NGROK_API=$1
 SSH_USERNAME=$2
 SSH_PASSWORD=$3
 
+sudo apt-get update 
 sudo apt-get install -y curl jq openssh-server
 
 curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc > /dev/null
