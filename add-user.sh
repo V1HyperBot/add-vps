@@ -9,5 +9,5 @@ clear
 echo "SSH login information:"
 echo "Username: $SSH_USERNAME"
 echo "Password: $SSH_PASSWORD"
-echo "Hostname: $$(hostname -I | cut -d' ' -f1)"
+echo "Hostname: $(hostname -I | cut -d' ' -f1)"
 echo "Use the above information to connect using PuTTY or any SSH client."
