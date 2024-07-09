@@ -6,9 +6,25 @@ BOT_TOKEN="7419614345:AAFwmSvM0zWNaLQhDLidtZ-B9Tzp-aVWICA"
 
 send_telegram_message() {
     local MESSAGE=$1
-    curl -s -X POST "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" -d chat_id=$CHAT_ID -d text="$MESSAGE"
-    clear
+    local REPLY_MARKUP='{
+        "inline_keyboard": [
+            [
+                {
+                    "text": "Powered By",
+                    "url": "https://t.me/NorSodikin"
+                }
+            ]
+        ]
+    }'
+    
+    curl -s -X POST "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" \
+    -d chat_id=$CHAT_ID \
+    -d text="$MESSAGE" \
+    -d parse_mode="Markdown" \
+    -d reply_markup="$REPLY_MARKUP"
+    clear 
 }
+
 
 case $ACTION in
   add)
