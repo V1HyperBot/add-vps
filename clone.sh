@@ -1,0 +1,22 @@
+REPO_CLONE=$1
+REPO_REMOTE=$2
+GITHUB_TOKEN=$3
+COMMIT_MESSAGE=${4:-"initial"}
+
+git clone "$REPO_CLONE"
+cd "$(basename "$REPO_CLONE" .git)"
+
+rm -rf .git 
+
+git config --global user.email "49699333+dependabot[bot]@users.noreply.github.com"
+git config --global user.name "dependabot[bot]"
+
+git init
+git add .
+git commit -m "$COMMIT_MESSAGE"
+
+git branch -M main
+git remote add origin "https://$REPO_REMOTE"
+git remote set-url origin "https://$GITHUB_TOKEN@$REPO_REMOTE"
+
+git push -u origin main
