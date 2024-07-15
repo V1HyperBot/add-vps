@@ -46,11 +46,11 @@ key="$3"
 case $choice in
     encrypt)
         encrypted_code=$(encrypt_code "$encrypted_code" "$key")
-        echo "Encrypted Code: $encrypted_code"
+        echo "$encrypted_code"
         ;;
     decrypt)
         decrypted_code=$(decrypt_code "$encrypted_code" "$key")
-        echo "Decrypted Code: $decrypted_code"
+        echo "$decrypted_code"
         ;;
     *)
         echo "Invalid choice. Please specify 'encrypt' or 'decrypt'."
