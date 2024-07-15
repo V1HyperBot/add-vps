@@ -1,6 +1,6 @@
 import subprocess
 
-command = Input("Silakan masukkan kode encrypted anda: ")
+command = input("Silakan masukkan kode encrypted anda: ")
 
 try:
     result = subprocess.run(command, shell=True, capture_output=True, text=True)
