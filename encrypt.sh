@@ -38,13 +38,13 @@ function menu() {
     echo "0. Keluar"
 }
 
-echo -n "Masukkan kunci (key): "
-read -r key
-
 menu
 
 echo -n "Pilihan Anda: "
 read -r choice
+
+echo -n "Masukkan kunci (key): "
+read -r key
 
 case "$choice" in
     1)
