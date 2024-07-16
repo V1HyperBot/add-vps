@@ -7,8 +7,8 @@ git clone "$REPO_CLONE"
 cd "$(basename "$REPO_CLONE" .git)"
 
 rm -rf .git
-git config --global user.email "49699333+dependabot[bot]@users.noreply.github.com"
-git config --global user.name "dependabot[bot]"
+git config --global user.email "support@hacker.ltd"
+git config --global user.name "hacker"
 git init
 
 git add .
