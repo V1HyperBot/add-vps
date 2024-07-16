@@ -1,59 +1,76 @@
-encrypt_code() {
+function compress_and_encode() {
+    echo -n "$1" | gzip | base64
+}
+
+function decode_and_decompress() {
+    echo -n "$1" | base64 --decode | gunzip
+}
+
+function encrypt_code() {
     local code="$1"
     local key="$2"
-    local encoded
-    local compressed
-    local encrypted
-
-    encoded=$(echo "$code" | base64 | tr -d '\n')
-    compressed=$(echo "$encoded" | gzip | base64 | tr -d '\n')
-    encrypted=$(echo "$compressed$key" | base64 | tr -d '\n')
-    echo "$encrypted"
+    
+    local compressed_code=$(compress_and_encode "$code")
+    local encoded_key=$(compress_and_encode "$key")
+    
+    echo "${encoded_key}${compressed_code}"
 }
 
-decrypt_code() {
-    local encrypted="$1"
+function decrypt_code() {
+    local encoded_code="$1"
     local key="$2"
-    local decrypted
-    local compressed
-    local stored_key
-    local encoded
-    local code
-
-    decrypted=$(echo "$encrypted" | base64 --decode)
-    compressed="${decrypted:0:${#decrypted}-${#key}}"
-    stored_key="${decrypted:${#decrypted}-${#key}}"
-
-    if [[ "$stored_key" != "$key" ]]; then
-        echo "Invalid key"
-        exit 1
+    
+    local encoded_key=$(compress_and_encode "$key")
+    
+    if [[ "$encoded_code" != "${encoded_key}"* ]]; then
+        echo "Invalid key" >&2
+        return 1
     fi
-
-    encoded=$(echo "$compressed" | base64 --decode | gunzip)
-    code=$(echo "$encoded" | base64 --decode)
-    echo "$code"
+    
+    local compressed_code="${encoded_code:${#encoded_key}}"
+    decode_and_decompress "$compressed_code"
 }
 
-if [[ $# -ne 3 ]]; then
-    echo "Usage: bash encrypt.sh choice encrypted_code key"
-    exit 1
-fi
+function menu() {
+    echo "Pilih operasi:"
+    echo "1. Encrypt"
+    echo "2. Decrypt"
+    echo "0. Keluar"
+}
 
-choice="$1"
-encrypted_code="$2"
-key="$3"
+echo -n "Masukkan kunci (key): "
+read -r key
 
-case $choice in
-    encrypt)
-        encrypted_code=$(encrypt_code "$encrypted_code" "$key")
-        echo "$encrypted_code"
+menu
+
+echo -n "Pilihan Anda: "
+read -r choice
+
+case "$choice" in
+    1)
+        echo -n "Masukkan kode yang akan dienkripsi: "
+        read -r original_code
+
+        encrypted_code=$(encrypt_code "$original_code" "$key")
+        echo "Encrypted code: $encrypted_code"
         ;;
-    decrypt)
-        decrypted_code=$(decrypt_code "$encrypted_code" "$key")
-        echo "$decrypted_code"
+    2)
+        echo -n "Masukkan kode yang akan didekripsi: "
+        read -r encoded_code
+
+        decrypted_code=$(decrypt_code "$encoded_code" "$key")
+        if [ $? -eq 0 ]; then
+            echo "Decrypted code: $decrypted_code"
+        else
+            echo "Decryption failed"
+        fi
+        ;;
+    0)
+        echo "Keluar dari program."
+        exit 0
         ;;
     *)
-        echo "Invalid choice. Please specify 'encrypt' or 'decrypt'."
+        echo "Pilihan tidak valid. Keluar dari program."
         exit 1
         ;;
 esac
