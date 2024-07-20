@@ -60,7 +60,7 @@ case "$choice" in
         fi
 
         encrypted_code=$(encrypt_code "$original_code" "$key")
-        echo "Encrypted code: $encrypted_code"
+        echo "$encrypted_code"
         ;;
     2)
         if [ $# -eq 0 ]; then
