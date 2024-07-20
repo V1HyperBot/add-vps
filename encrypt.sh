@@ -38,25 +38,37 @@ function menu() {
     echo "0. Keluar"
 }
 
-menu
+if [ $# -eq 0 ]; then
+    menu
+    echo -n "Pilihan Anda: "
+    read -r choice
 
-echo -n "Pilihan Anda: "
-read -r choice
-
-echo -n "Masukkan kunci (key): "
-read -r key
+    echo -n "Masukkan kunci (key): "
+    read -r key
+else
+    choice=$1
+    key=$2
+fi
 
 case "$choice" in
     1)
-        echo -n "Masukkan kode yang akan dienkripsi: "
-        read -r original_code
+        if [ $# -eq 0 ]; then
+            echo -n "Masukkan kode yang akan dienkripsi: "
+            read -r original_code
+        else
+            original_code=$3
+        fi
 
         encrypted_code=$(encrypt_code "$original_code" "$key")
         echo "Encrypted code: $encrypted_code"
         ;;
     2)
-        echo -n "Masukkan kode yang akan didekripsi: "
-        read -r encoded_code
+        if [ $# -eq 0 ]; then
+            echo -n "Masukkan kode yang akan didekripsi: "
+            read -r encoded_code
+        else
+            encoded_code=$3
+        fi
 
         decrypted_code=$(decrypt_code "$encoded_code" "$key")
         if [ $? -eq 0 ]; then
