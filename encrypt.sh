@@ -72,7 +72,7 @@ case "$choice" in
 
         decrypted_code=$(decrypt_code "$encoded_code" "$key")
         if [ $? -eq 0 ]; then
-            echo "Decrypted code: $decrypted_code"
+            echo "$decrypted_code"
         else
             echo "Decryption failed"
         fi
