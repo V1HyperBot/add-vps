@@ -1,11 +1,14 @@
-
-send_telegram_message() {
+function send_telegram_message() {
     local MESSAGE=$1
     local INLINE_KEYBOARD='{"inline_keyboard":[[{"text":"Powered By","url":"https://t.me/NorSodikin"}]]}'
-    curl -s -X POST "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" -d chat_id=$CHAT_ID -d text="$MESSAGE" -d parse_mode=Markdown -d reply_markup="$INLINE_KEYBOARD"
+    curl -s -X POST "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" \
+        -d chat_id=$CHAT_ID \
+        -d text="$MESSAGE" \
+        -d parse_mode=Markdown \
+        -d reply_markup="$INLINE_KEYBOARD"
 }
 
-generate_random_string() {
+function generate_random_string() {
     local LENGTH=$1
     < /dev/urandom tr -dc A-Za-z0-9 | head -c $LENGTH
 }
