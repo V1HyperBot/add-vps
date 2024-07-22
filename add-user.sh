@@ -1,4 +1,3 @@
-#!/bin/bash
 
 send_telegram_message() {
     local MESSAGE=$1
