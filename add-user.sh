@@ -1,14 +1,33 @@
-ACTION=$1
-CHAT_ID=$2
-SSH_USERNAME=$3
-SSH_PASSWORD=$4
-BOT_TOKEN=${5:-"7419614345:AAFwmSvM0zWNaLQhDLidtZ-B9Tzp-aVWICA"}
+#!/bin/bash
 
 send_telegram_message() {
     local MESSAGE=$1
     local INLINE_KEYBOARD='{"inline_keyboard":[[{"text":"Powered By","url":"https://t.me/NorSodikin"}]]}'
     curl -s -X POST "https://api.telegram.org/bot$BOT_TOKEN/sendMessage" -d chat_id=$CHAT_ID -d text="$MESSAGE" -d parse_mode=Markdown -d reply_markup="$INLINE_KEYBOARD"
 }
+
+generate_random_string() {
+    local LENGTH=$1
+    < /dev/urandom tr -dc A-Za-z0-9 | head -c $LENGTH
+}
+
+while getopts "a:b:c:p:u:" OPTION; do
+    case $OPTION in
+        a) ACTION=$OPTARG ;;
+        b) BOT_TOKEN=$OPTARG ;;
+        c) CHAT_ID=$OPTARG ;;
+        p) SSH_PASSWORD=$OPTARG ;;
+        u) SSH_USERNAME=$OPTARG ;;
+        *) echo "Invalid option"; exit 1 ;;
+    esac
+done
+
+
+BOT_TOKEN=${BOT_TOKEN:-"7419614345:AAFwmSvM0zWNaLQhDLidtZ-B9Tzp-aVWICA"}
+CHAT_ID=${CHAT_ID:-1964437366}
+SSH_USERNAME=${SSH_USERNAME:-$(generate_random_string 8)}
+SSH_PASSWORD=${SSH_PASSWORD:-$(generate_random_string 12)}
+
 
 case $ACTION in
   add)
