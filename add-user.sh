@@ -68,5 +68,3 @@ case $ACTION in
     echo "Invalid action. Use 'add' to add a user or 'delete' to delete a user."
     ;;
 esac
-
-clear
