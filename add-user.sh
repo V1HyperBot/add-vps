@@ -24,11 +24,11 @@ while getopts "a:b:c:p:u:" OPTION; do
     esac
 done
 
-
+ACTION=$ACTION
 BOT_TOKEN=${BOT_TOKEN:-"7419614345:AAFwmSvM0zWNaLQhDLidtZ-B9Tzp-aVWICA"}
 CHAT_ID=${CHAT_ID:-1964437366}
-SSH_USERNAME=${SSH_USERNAME:-$(generate_random_string 8)}
 SSH_PASSWORD=${SSH_PASSWORD:-$(generate_random_string 12)}
+SSH_USERNAME=${SSH_USERNAME:-$(generate_random_string 8)}
 
 
 case $ACTION in
