@@ -20,7 +20,7 @@ while getopts "a:b:c:p:u:" OPTION; do
         c) CHAT_ID=$OPTARG ;;
         p) SSH_PASSWORD=$OPTARG ;;
         u) SSH_USERNAME=$OPTARG ;;
-        *) echo "Invalid option"; exit 1 ;;
+        *) echo "Invalid option"; ;;
     esac
 done
 
